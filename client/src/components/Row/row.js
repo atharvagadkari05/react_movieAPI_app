@@ -1,39 +1,36 @@
-import {useState, useEffect ,React} from 'react'
-import axios from 'axios';
-const baseURl = 'https://api.themoviedb.org/3'
-const testURl = 'https://api.themoviedb.org/3/discover/tv?api_key=420256deff5976ec338e5aa854fd52e5&with_networks=213'
-function Row(props) {
-  
-  const [movies,setmovies] = useState([]);
+import React, { useState, useEffect } from "react";
+import "./row.css";
+import axios from "axios";
+const baseURL = "https://image.tmdb.org/t/p/original/";
 
+function Row(props) {
+  const [movies, setmovies] = useState([]);
 
   useEffect(() => {
+    async function fetchMovies() {
+      const request = await axios.get(props.fetchUrl);
 
-async function fetchMovies(){
-const req = await axios.get(testURl);
-console.log(req.data.results)
-setmovies(req.data.results)
-return req
-}
- 
-fetchMovies()
-  },[testURl])
+      setmovies(request.data.results);
 
-  console.table(movies)
-  
-    return (
-<div className='row_container'>
-<h2>{props.title}</h2>
-<div className='row_poster'>
-{
-    movies.map((movie) => {
-        // <img src={`${baseURl}${movie.poster_path}`} alt={movie.name}/>
-        <h6>{movie.name}</h6>
-    })
-}
-</div>
-</div>
-  )
+      return request
+     
+    }
+
+    fetchMovies();
+  }, [props.fetchUrl]);
+
+  return (
+    <div className="row_container">
+      <h2>{props.title}</h2>
+
+      <div className="row">
+        {movies.map((e) => (
+     <img src={`${baseURL}${e.poster_path}`} />
+          
+        ))}
+      </div>
+    </div>
+  );
 }
 
-export default Row
+export default Row;

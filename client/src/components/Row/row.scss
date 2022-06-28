@@ -1,0 +1,18 @@
+.row_container{
+   
+    h2{
+        color: white;
+    }
+
+    >.row{
+        // margin-right: 1em;
+    display: flex;
+        >img{
+            width: 10%;
+            margin: .5em;
+        }
+    }
+    >.row_poster:hover{
+       transform: scale(1.2);
+    }
+}
